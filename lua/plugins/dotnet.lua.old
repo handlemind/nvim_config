@@ -1,0 +1,24 @@
+return {
+  'GustavEikaas/easy-dotnet.nvim',
+  config = function()
+    local dotnet = require 'easy-dotnet'
+    dotnet.setup()
+
+    vim.api.nvim_create_user_command('Secrets', function()
+      dotnet.secrets()
+    end, {})
+
+    vim.keymap.set('n', '<leader>dr', function()
+      dotnet.run_project {}
+    end)
+  end,
+}
+
+{
+  'seblj/roslyn.nvim',
+  ft = 'cs',
+  opts = {
+    -- your configuration comes here; leave empty for default settings
+  },
+}
+
