@@ -38,7 +38,7 @@ return {
                                                 {clear = true}),
 
             callback = function(event)
-                local telescope = require('telescope.builtin')
+                local fzf = require('fzf-lua')
 
                 local client = vim.lsp.get_client_by_id(event.data.client_id)
 
@@ -65,19 +65,19 @@ return {
                     if client and client.name == 'csharp_ls' then
                         vim.lsp.buf.definition()
                     else
-                        telescope.lsp_definitions()
+                        fzf.lsp_definitions()
                     end
                 end, '[G]oto [D]efinition')
 
-                map('gr', telescope.lsp_references, '[G]oto [R]eferences')
-                map('gI', telescope.lsp_implementations,
+                map('gr', fzf.lsp_references, '[G]oto [R]eferences')
+                map('gI', fzf.lsp_implementations,
                     '[G]oto [I]mplementation')
 
-                map('<leader>D', telescope.lsp_type_definitions,
+                map('<leader>D', fzf.lsp_typedefs,
                     'Type [D]efinition')
-                map('<leader>ds', telescope.lsp_document_symbols,
+                map('<leader>ds', fzf.lsp_document_symbols,
                     '[D]ocument [S]ymbols')
-                map('<leader>ws', telescope.lsp_dynamic_workspace_symbols,
+                map('<leader>ws', fzf.lsp_live_workspace_symbols,
                     '[W]orkspace [S]ymbols')
 
                 map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')

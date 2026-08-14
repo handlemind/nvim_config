@@ -1,20 +1,20 @@
-local conf = require('telescope.config').values
 local function toggle_telescope(harpoon_files)
   local file_paths = {}
   for _, item in ipairs(harpoon_files.items) do
     table.insert(file_paths, item.value)
   end
 
-  require('telescope.pickers')
-    .new({}, {
-      prompt_title = 'Harpoon',
-      finder = require('telescope.finders').new_table {
-        results = file_paths,
-      },
-      previewer = conf.file_previewer {},
-      sorter = conf.generic_sorter {},
-    })
-    :find()
+  require('fzf-lua').fzf_exec(file_paths, {
+    prompt = 'Harpoon> ',
+    previewer = 'builtin',
+    actions = {
+      ['default'] = function(selected)
+        if selected and selected[1] then
+          vim.cmd.edit(vim.fn.fnameescape(selected[1]))
+        end
+      end,
+    },
+  })
 end
 
 return {
