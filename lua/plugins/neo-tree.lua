@@ -1,3 +1,4 @@
+---@type LazySpec
 return {
   'nvim-neo-tree/neo-tree.nvim',
   branch = 'v3.x',
@@ -7,7 +8,8 @@ return {
     'MunifTanjim/nui.nvim',
   },
   keys = {
-    { '<leader>pe', '<cmd>Neotree toggle<cr>', desc = 'NeoTree' },
+    { '<leader>pe', '<cmd>Neotree toggle<cr>', desc = 'NeoTree: toggle' },
+    { '<leader>pr', '<cmd>Neotree reveal<cr>', desc = 'NeoTree: reveal' },
   },
   opts = {
     close_if_last_window = true,
@@ -79,4 +81,26 @@ return {
       },
     },
   },
+  config = function()
+    require('neo-tree').setup {
+      window = {
+        mappings = {
+          ['J'] = function(state)
+            local tree = state.tree
+            local node = tree:get_node()
+            local siblings = tree:get_nodes(node:get_parent_id())
+            local renderer = require 'neo-tree.ui.renderer'
+            renderer.focus_node(state, siblings[#siblings]:get_id())
+          end,
+          ['K'] = function(state)
+            local tree = state.tree
+            local node = tree:get_node()
+            local siblings = tree:get_nodes(node:get_parent_id())
+            local renderer = require 'neo-tree.ui.renderer'
+            renderer.focus_node(state, siblings[1]:get_id())
+          end,
+        },
+      },
+    }
+  end,
 }

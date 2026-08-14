@@ -17,9 +17,16 @@ set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic messa
 set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror message' })
 set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics [Q]uickfix list' })
 
+set('n', '<C-d>', '<C-d>zz')
+set('n', '<C-u>', '<C-u>zz')
+set('n', 'n', 'nzzzv')
+set('n', 'N', 'Nzzzv')
+
 set('n', '<leader>pv', vim.cmd.Ex, { desc = 'Open netrw' })
 set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move line up' })
 set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move line down' })
+
+set('n', '<leader>cf', '<cmd>cd %:h <CR>', { desc = 'Set Files Location As Dir' })
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
@@ -35,3 +42,12 @@ set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
 set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
 set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
 set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+
+vim.cmd [[
+function! Sort(...) abort
+  '[,']sort
+  call setpos('.', getpos("''"))
+endfunction
+nnoremap gs m'<Cmd>set operatorfunc=Sort<CR>g@
+xnoremap gs :sort<CR>
+  ]]

@@ -15,13 +15,12 @@ vim.opt.undofile = true
 -- [[ Neovim UI ]]
 
 vim.opt.guicursor = ''
-vim.opt.nu = true
-
--- Show line numbers
-vim.opt.relativenumber = true
+vim.opt.nu = true -- Set the absolute number
+vim.opt.relativenumber = true -- Set the relative number
 
 -- Enable folding (default 'foldmarker')
 -- vim.opt.foldmethod = 'syntax'
+--vim.opt.foldcolumn = "1" -- Show the fold column
 vim.opt.foldmethod = 'expr'
 vim.opt.foldlevelstart = 99
 -- vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
@@ -61,7 +60,7 @@ vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.autoindent = true
 vim.opt.cindent = true
-vim.opt.wrap = false
+vim.opt.wrap = false -- Do not display text over multiple lines
 
 vim.opt.breakindent = true
 
@@ -79,8 +78,8 @@ vim.opt.incsearch = true
 
 vim.opt.inccommand = 'split'
 
--- Make it so there are always 8 lines below cursor
-vim.opt.scrolloff = 8
+-- Make it so there are always 5 lines below cursor
+vim.opt.scrolloff = 5
 vim.opt.signcolumn = 'yes'
 vim.opt.isfname:append '@-@'
 
@@ -102,11 +101,9 @@ vim.opt.listchars = {
 }
 
 -- ms to wait for trigger an event
-vim.opt.updatetime = 50
-vim.opt.timeoutlen = 300
-
-vim.opt.splitbelow = true
-vim.opt.splitright = true
-
+vim.opt.updatetime = 50 -- If in this many milliseconds nothing is typed, the swap file will be written to disk
+vim.opt.timeoutlen = 300 -- Time in milliseconds to wait for a mapped sequence to complete
+vim.opt.splitbelow = true -- Put new windows below current
+vim.opt.splitright = true -- Put new windows right of current
 -- Set borders for all floating windows 'rounded'/'single'/'double'/'solid'
 vim.o.winborder = 'rounded'

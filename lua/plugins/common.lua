@@ -27,6 +27,18 @@ return {
     opts = {},
   },
 
+  {
+    'f-person/auto-dark-mode.nvim',
+    opts = {
+      set_dark_mode = function()
+        vim.cmd.colorscheme 'nightfox'
+      end,
+      set_light_mode = function()
+        vim.cmd.colorscheme 'dayfox'
+      end,
+    },
+  },
+
   -- Highlight todo, notes, etc in comments
   {
     'folke/todo-comments.nvim',
@@ -54,7 +66,8 @@ return {
     'eandrju/cellular-automaton.nvim',
     keys = {
       { '<leader>zx', '<cmd>CellularAutomaton make_it_rain<CR>', desc = 'Drop buffer' },
-      { '<leader>zc', '<cmd>CellularAutomaton scramble<CR>', desc = 'Drop buffer' },
+      { '<leader>zc', '<cmd>CellularAutomaton scramble<CR>', desc = 'Scramble buffer' },
+      { '<leader>zv', '<cmd>CellularAutomaton game_of_life<CR>', desc = 'Game of life' },
     },
   },
 
@@ -76,7 +89,7 @@ return {
     opts = {
       options = {
         icons_enabled = false,
-        theme = 'monokai-pro',
+        theme = 'nightfox',
         component_separators = '|',
         section_separators = '',
       },

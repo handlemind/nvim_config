@@ -36,7 +36,7 @@ return {
       "yaml",
     }
 
-    local already_installed = require("nvim-treesitter").get_installed()
+    local already_installed = require("nvim-treesitter").get_installed("parsers")
     local parsers_to_install = vim.iter(ensure_installed)
       :filter(function(parser)
         return not vim.tbl_contains(already_installed, parser)
@@ -47,7 +47,7 @@ return {
     end
 
     local function is_parser_installed(lang)
-      local installed = require("nvim-treesitter").get_installed()
+      local installed = require("nvim-treesitter").get_installed("parsers")
       return vim.tbl_contains(installed, lang)
     end
 
