@@ -7,7 +7,9 @@ vim.opt.clipboard = 'unnamedplus'
 -- Don't use swapfile
 vim.opt.swapfile = false
 vim.opt.backup = false
-vim.opt.undodir = os.getenv 'HOME' .. '/.vim/undodir'
+local undodir = vim.fs.joinpath(vim.fn.stdpath 'state', 'undo')
+vim.fn.mkdir(undodir, 'p')
+vim.opt.undodir = undodir
 vim.opt.undofile = true
 
 -- [[ Neovim UI ]]

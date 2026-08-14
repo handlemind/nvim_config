@@ -5,10 +5,16 @@ return {
   'stevearc/conform.nvim',
   opts = {
     notify_on_error = false,
-    format_on_save = {
-      timeout_ms = 500,
-      lsp_fallback = true,
-    },
+    format_on_save = function(bufnr)
+      -- Odin buffers autosave frequently for OLS diagnostics; skip format there.
+      if vim.bo[bufnr].filetype == 'odin' then
+        return
+      end
+      return {
+        timeout_ms = 500,
+        lsp_fallback = true,
+      }
+    end,
     formatters_by_ft = {
       lua = { 'stylua' },
       javascript = { { 'prettier' } },

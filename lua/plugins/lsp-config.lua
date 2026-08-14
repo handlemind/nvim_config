@@ -24,11 +24,10 @@ return {
 
         require('mason-tool-installer').setup({
             ensure_installed = {
-                'lua-language-server', 'clangd', -- 'ols',
+                'lua-language-server', 'clangd', 'ols',
                 -- 'gopls',
                 'html-lsp', 'typescript-language-server',
-                'tailwindcss-language-server', 'stylua'
-                -- 'delve',
+                'tailwindcss-language-server', 'stylua', 'codelldb', 'delve'
             }
         })
 
@@ -45,6 +44,14 @@ return {
 
                 if client and client.server_capabilities.documentSymbolProvider then
                     require('nvim-navic').attach(client, event.buf)
+                end
+
+                -- Workaround: OLS doesn't show diagnostics on file open, only after save.
+                -- https://github.com/DanielGavin/ols/issues/1206
+                if client and client.name == "ols" then
+                    vim.lsp.buf_notify( event.buf, "textDocument/didSave", {
+                        textDocument = { uri = vim.uri_from_bufnr( event.buf ) },
+                    } )
                 end
 
                 local map = function(keys, func, desc, mode)
@@ -120,43 +127,40 @@ return {
 
         local servers = {
             gopls = {},
-
+            ols = {
+                init_options = {
+                    checker_args = '-strict-style',
+                    enable_inlay_hints_params = true,
+                    enable_inlay_hints_default_params = true,
+                    enable_inlay_hints_implicit_return = true,
+                    enable_semantic_tokens = true,
+                    enable_checker_only_saved = true,
+                },
+            },
             clangd = {},
-
             tailwindcss = {},
-
             ts_ls = {},
-
             html = {
                 filetypes = {'html', 'twig', 'hbs'},
-
                 init_options = {
                     configurationSection = {'html', 'css', 'javascript'},
-
                     embeddedLanguages = {css = true, javascript = true},
-
                     provideFormatter = false
                 }
             },
-
             lua_ls = {
                 settings = {
                     Lua = {
                         runtime = {version = 'LuaJIT'},
-
                         telemetry = {enable = false},
-
                         workspace = {
                             checkThirdParty = false,
-
                             library = {
                                 '${3rd}/luv/library',
                                 unpack(vim.api.nvim_get_runtime_file('', true))
                             }
                         },
-
                         completion = {callSnippet = 'Replace'},
-
                         diagnostics = {disable = {'missing-fields'}}
                     }
                 }
@@ -169,5 +173,7 @@ return {
             vim.lsp.config(server_name, config)
             vim.lsp.enable(server_name)
         end
+
+
     end
 }

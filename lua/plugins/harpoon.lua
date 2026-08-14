@@ -47,28 +47,28 @@ return {
         desc = 'Mark harpoon file',
       },
       {
-        '<M-h>',
+        '<leader>1',
         function()
           require('harpoon'):list():select(1)
         end,
         desc = 'Go to 1 [harpoon]',
       },
       {
-        '<M-j>',
+        '<leader>2',
         function()
           require('harpoon'):list():select(2)
         end,
         desc = 'Go to 2 [harpoon]',
       },
       {
-        '<M-k>',
+        '<leader>3',
         function()
           require('harpoon'):list():select(3)
         end,
         desc = 'Go to 3 [harpoon]',
       },
       {
-        '<M-l>',
+        '<leader>4',
         function()
           require('harpoon'):list():select(4)
         end,
